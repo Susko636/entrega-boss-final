@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://dbh3qyl6qygkw"]
+
+[ext_resource type="Script" uid="uid://ckdu1glrfb1lm" path="res://BattleMap.gd" id="1_67bvd"]
+[ext_resource type="PackedScene" uid="uid://cogojiye6cwlc" path="res://scenes/grid_cursor.tscn" id="1_qhp1x"]
+[ext_resource type="Texture2D" uid="uid://bc7rkw4jlh2kf" path="res://overlay_box.tres" id="2_5utsm"]
+[ext_resource type="PackedScene" uid="uid://vh216qpxc3sx" path="res://scenes/unit.tscn" id="2_ujkk0"]
+[ext_resource type="Resource" uid="uid://dc4qad56am4ai" path="res://hero_test.tres" id="3_5utsm"]
+[ext_resource type="Resource" uid="uid://0uumm10xipc0" path="res://enemy_test.tres" id="4_hpw63"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hpw63"]
+texture = ExtResource("2_5utsm")
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_lq7qi"]
+sources/0 = SubResource("TileSetAtlasSource_hpw63")
+
+[node name="BattleMap" type="Node2D" unique_id=953501615]
+script = ExtResource("1_67bvd")
+
+[node name="TerrainLayer" type="TileMapLayer" parent="." unique_id=1580225865]
+
+[node name="OverlayLayer" type="TileMapLayer" parent="." unique_id=1986260539]
+modulate = Color(0.19607843, 0.47058824, 1, 0.84313726)
+tile_set = SubResource("TileSet_lq7qi")
+
+[node name="Units" type="Node2D" parent="." unique_id=219018256]
+
+[node name="Prota" parent="Units" unique_id=176907120 instance=ExtResource("2_ujkk0")]
+data = ExtResource("3_5utsm")
+
+[node name="ColorRect" parent="Units/Prota" index="0" unique_id=758769063]
+color = Color(0, 0, 1, 1)
+
+[node name="Enemy" parent="Units" unique_id=809064301 instance=ExtResource("2_ujkk0")]
+position = Vector2(128, 48)
+data = ExtResource("4_hpw63")
+
+[node name="ColorRect" parent="Units/Enemy" index="0" unique_id=758769063]
+color = Color(0.6847434, 7.4602663e-06, 0.0448448, 1)
+
+[node name="GridCursor" parent="." unique_id=787516353 instance=ExtResource("1_qhp1x")]
+
+[editable path="Units/Prota"]
+[editable path="Units/Enemy"]

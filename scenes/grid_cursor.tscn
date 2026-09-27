@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cogojiye6cwlc"]
+
+[ext_resource type="Script" uid="uid://3r31fsanjkpq" path="res://scripts/GridCursor.gd" id="1_rty4g"]
+
+[node name="GridCursor" type="Node2D" unique_id=787516353]
+script = ExtResource("1_rty4g")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=295402169]
+offset_right = 16.0
+offset_bottom = 16.0
