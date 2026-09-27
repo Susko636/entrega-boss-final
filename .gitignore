@@ -1,0 +1,22 @@
+# Godot 4+ cache e importaciones
+.godot/
+*/.godot/
+
+# Godot 3
+.import/
+*/.import/
+
+# Archivos de exportacion
+export_presets.cfg
+build/
+bin/
+
+# Archivos temporales y del sistema
+.DS_Store
+Thumbs.db
+*.tmp
+*.translation
+
+# IDEs
+.vscode/
+.idea/
