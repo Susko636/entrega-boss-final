@@ -1,7 +1,24 @@
 [gd_scene format=3 uid="uid://bawlvq1t2aude"]
 
+[ext_resource type="Script" uid="uid://3fxfkb5djcj6" path="res://scripts/ActionMenu.gd" id="1_m2v2x"]
+
 [node name="ActionMenu" type="Control" unique_id=1871907602]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("1_m2v2x")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=511598964]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+focus_mode = 2
+
+[node name="AttackButton" type="Button" parent="VBoxContainer" unique_id=971856521]
+layout_mode = 2
+text = "Atacar"
+
+[node name="WaitButton" type="Button" parent="VBoxContainer" unique_id=859175071]
+layout_mode = 2
+text = "Esperar"

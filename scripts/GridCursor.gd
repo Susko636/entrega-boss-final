@@ -29,7 +29,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		move_direction.x -= 1
 	elif event.is_action_pressed("mover_abajo"):
 		move_direction.y += 1
-	elif event.is_action_pressed("mover_arribar"):
+	elif event.is_action_pressed("mover_arriba"):
 		move_direction.y -= 1
 
 	if move_direction != Vector2i.ZERO:

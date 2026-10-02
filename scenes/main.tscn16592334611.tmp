@@ -11,6 +11,7 @@ script = ExtResource("1_jyhfs")
 [node name="SceneContainer" type="Node" parent="." unique_id=1730403028]
 
 [node name="BattleMap" parent="SceneContainer" unique_id=953501615 instance=ExtResource("1_o5qli")]
+script = null
 
 [node name="UI_Layer" type="CanvasLayer" parent="." unique_id=656514183]
 

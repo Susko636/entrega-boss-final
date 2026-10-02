@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dutwiwyjltbhy"]
+
+[node name="Units" type="Node2D" unique_id=1150057152]
+
+[node name="UnitPlayer" type="Node2D" parent="." unique_id=538472014]
+
+[node name="UnitEnemy" type="Node2D" parent="." unique_id=1181692689]
