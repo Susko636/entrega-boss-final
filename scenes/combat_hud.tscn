@@ -1,7 +1,60 @@
 [gd_scene format=3 uid="uid://daxeryox41xcv"]
 
-[node name="CombatHUD" type="Control" unique_id=1921047878]
-layout_mode = 3
-anchors_preset = 0
+[ext_resource type="Script" uid="uid://ch5ddcipu5mpa" path="res://CombatHUD.gd" id="1_ibcap"]
+
+[node name="CombatHUD" type="PanelContainer" unique_id=1666005728]
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 77.0
+script = ExtResource("1_ibcap")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1216322098]
+layout_mode = 2
+
+[node name="AttackerInfo" type="VBoxContainer" parent="HBoxContainer" unique_id=1528791967]
+layout_mode = 2
+
+[node name="AttackerName" type="Label" parent="HBoxContainer/AttackerInfo" unique_id=895443577]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Prota"
+
+[node name="AttackerHP" type="Label" parent="HBoxContainer/AttackerInfo" unique_id=401427543]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "25/25"
+
+[node name="AttackerDmg" type="Label" parent="HBoxContainer/AttackerInfo" unique_id=1376896437]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "10"
+
+[node name="AttackerDef" type="Label" parent="HBoxContainer/AttackerInfo" unique_id=430152020]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "10"
+
+[node name="VSLabel" type="Label" parent="HBoxContainer" unique_id=238112948]
+layout_mode = 2
+
+[node name="DefenderInfo" type="VBoxContainer" parent="HBoxContainer" unique_id=623337214]
+layout_mode = 2
+
+[node name="DefenderName" type="Label" parent="HBoxContainer/DefenderInfo" unique_id=2048743950]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Soldado"
+
+[node name="DefenderHP" type="Label" parent="HBoxContainer/DefenderInfo" unique_id=545372006]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "20/20"
+
+[node name="DefenderDmg" type="Label" parent="HBoxContainer/DefenderInfo" unique_id=1502533483]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "5"
+
+[node name="DefenderDef" type="Label" parent="HBoxContainer/DefenderInfo" unique_id=1041787069]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "3"

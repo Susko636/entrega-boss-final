@@ -17,8 +17,10 @@ focus_mode = 2
 
 [node name="AttackButton" type="Button" parent="VBoxContainer" unique_id=971856521]
 layout_mode = 2
+theme_override_font_sizes/font_size = 10
 text = "Atacar"
 
 [node name="WaitButton" type="Button" parent="VBoxContainer" unique_id=859175071]
 layout_mode = 2
+theme_override_font_sizes/font_size = 10
 text = "Esperar"

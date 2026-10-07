@@ -2,6 +2,8 @@ class_name BattleMap
 extends Node2D
 
 signal unit_action_needed(can_attack: bool, menu_pos: Vector2)
+signal combat_forecast_requested(attacker: Unit, defender: Unit)
+signal combat_forecast_cleared
 
 enum MapState { IDLE, MOVE_TARGET, ACTION_MENU, ATTACK_TARGET }
 var current_state: MapState = MapState.IDLE
@@ -41,6 +43,12 @@ func _on_cursor_cell_changed(new_cell: Vector2i) -> void:
 	if units_by_cell.has(new_cell):
 		var unit: Unit = units_by_cell[new_cell]
 		print("Cursor sobre: ", unit.data.character_name, " (HP: ", unit.current_hp, ")")
+	
+	if current_state == MapState.ATTACK_TARGET:
+		if new_cell in attackable_cells and units_by_cell.has(new_cell):
+			combat_forecast_requested.emit(selected_unit, units_by_cell[new_cell])
+		else:
+			combat_forecast_cleared.emit()
 
 func _on_cursor_accept(selected_cell: Vector2i) -> void:
 	match current_state:
@@ -61,6 +69,7 @@ func _on_cursor_cancel(_selected_cell: Vector2i) -> void:
 		MapState.MOVE_TARGET:
 			_deselect_unit()
 		MapState.ATTACK_TARGET:
+			combat_forecast_cleared.emit()
 			overlay_layer.clear()
 			current_state = MapState.ACTION_MENU
 			cursor.is_active = false
@@ -131,8 +140,11 @@ func _start_attack_selection() -> void:
 	cursor.is_active = true
 	
 	if attackable_cells.size() > 0:
+		var first_target_cell = attackable_cells[0]
 		cursor.position = Grid.grid_to_world(attackable_cells[0])
-
+		if units_by_cell.has(first_target_cell):         
+			combat_forecast_requested.emit(selected_unit, units_by_cell[first_target_cell])
+	
 func _try_attack_target(target_cell: Vector2i) -> void:
 	if target_cell in attackable_cells and units_by_cell.has(target_cell):
 		var target_unit: Unit = units_by_cell[target_cell]
@@ -141,6 +153,7 @@ func _try_attack_target(target_cell: Vector2i) -> void:
 		print("Casilla no válida para atacar.")
 
 func _resolve_combat(attacker: Unit, defender: Unit, defender_cell: Vector2i) -> void:
+	combat_forecast_cleared.emit()
 	cursor.is_active = false
 	overlay_layer.clear()
 
