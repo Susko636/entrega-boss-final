@@ -4,8 +4,14 @@ extends Node2D
 signal unit_action_needed(can_attack: bool, menu_pos: Vector2)
 signal combat_forecast_requested(attacker: Unit, defender: Unit)
 signal combat_forecast_cleared
+signal match_won
+signal match_lost
+signal phase_changed(phase: Phase)
 
-enum MapState { IDLE, MOVE_TARGET, ACTION_MENU, ATTACK_TARGET }
+@export var current_objective: MissionObjective
+var current_turn: int = 1
+
+enum MapState { IDLE, MOVE_TARGET, ACTION_MENU, ATTACK_TARGET, GAME_OVER }
 var current_state: MapState = MapState.IDLE
 
 enum Phase { PLAYER_PHASE, ENEMY_PHASE }
@@ -337,6 +343,9 @@ func start_enemy_phase() -> void:
 	current_phase = Phase.ENEMY_PHASE
 	cursor.is_active = false
 	print("--- INICIO DE FASE ENEMIGA ---")
+	
+	phase_changed.emit(current_phase)
+	await get_tree().create_timer(1.0).timeout
 
 	reset_faction_actions(CharacterData.Faction.ENEMY)
 	await get_tree().create_timer(0.6).timeout
@@ -360,7 +369,7 @@ func _process_enemy_turn(enemy: Unit) -> void:
 
 	var reachable: Dictionary = get_reachable_cells_for_faction(enemy.grid_coord, enemy.data.move_range, CharacterData.Faction.ENEMY)
 
-	var player_units: Array[Unit] = _get_units_of_faction(CharacterData.Faction.PLAYER)
+	var player_units: Array[Unit] = get_units_of_faction(CharacterData.Faction.PLAYER)
 	if player_units.is_empty():
 		enemy.has_acted = true
 		return
@@ -402,7 +411,7 @@ func _process_enemy_turn(enemy: Unit) -> void:
 	enemy.has_acted = true
 	await get_tree().create_timer(0.2).timeout
 
-func _get_units_of_faction(faction: CharacterData.Faction) -> Array[Unit]:
+func get_units_of_faction(faction: CharacterData.Faction) -> Array[Unit]:
 	var result: Array[Unit] = []
 	for unit in units_by_cell.values():
 		if is_instance_valid(unit) and unit.data.faction == faction:
@@ -540,9 +549,17 @@ func _get_adjacent_player_targets(cell: Vector2i) -> Array[Unit]:
 
 func start_player_phase() -> void:
 	current_phase = Phase.PLAYER_PHASE
-	print("--- INICIO DE FASE DEL JUGADOR ---")
+	current_turn += 1
+	print("--- FASE DEL JUGADOR - TURNO ", current_turn, " ---")
+
+	phase_changed.emit(current_phase)
+	await get_tree().create_timer(1.0).timeout 
+
+	if current_objective:
+		current_objective.on_turn_advanced(current_turn, self)
 
 	reset_faction_actions(CharacterData.Faction.PLAYER)
+	check_mission_status()
 
 	cursor.is_active = true
 	current_state = MapState.IDLE
@@ -557,3 +574,32 @@ func _destroy_unit(unit: Unit) -> void:
 			break
 			
 	unit.queue_free()
+	
+	await get_tree().process_frame
+	check_mission_status()
+
+func check_mission_status() -> void:
+	
+	if current_objective == null:
+		return
+
+	if current_objective.is_defeat_incurred(self):
+		_end_game(false)
+	elif current_objective.is_victory_achieved(self):
+		_end_game(true)
+
+func _end_game(won: bool) -> void:
+
+	cursor.is_active = false
+	cursor.set_process_unhandled_input(false)
+	cursor.set_process_input(false)
+	cursor.hide()
+	
+	overlay_layer.clear()
+
+	if won:
+		print("--- VICTORIA: Objetivo cumplido ---")
+		match_won.emit()
+	else:
+		print("--- DERROTA: Misión fallida ---")
+		match_lost.emit()

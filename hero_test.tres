@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_1gmug")
 character_name = "Prota"
+is_leader = true
 max_hp = 25
 strength = 10
 defense = 5

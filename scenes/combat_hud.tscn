@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://daxeryox41xcv"]
 
-[ext_resource type="Script" uid="uid://ch5ddcipu5mpa" path="res://CombatHUD.gd" id="1_ibcap"]
+[ext_resource type="Script" uid="uid://ch5ddcipu5mpa" path="res://scripts/CombatHUD.gd" id="1_ibcap"]
 
 [node name="CombatHUD" type="PanelContainer" unique_id=1666005728]
 offset_right = 40.0

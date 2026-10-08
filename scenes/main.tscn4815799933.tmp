@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cwmfjr83ukd0x"]
+
+[ext_resource type="Script" uid="uid://clj4c6fxcosds" path="res://scripts/Main.gd" id="1_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://dbh3qyl6qygkw" path="res://scenes/battle_map.tscn" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://daxeryox41xcv" path="res://scenes/combat_hud.tscn" id="2_sugp2"]
+[ext_resource type="PackedScene" uid="uid://bawlvq1t2aude" path="res://scenes/action_menu.tscn" id="3_jyhfs"]
+
+[node name="Main" type="Node2D" unique_id=1396697347]
+script = ExtResource("1_jyhfs")
+
+[node name="SceneContainer" type="Node" parent="." unique_id=1730403028]
+
+[node name="BattleMap" parent="SceneContainer" unique_id=953501615 instance=ExtResource("1_o5qli")]
+
+[node name="UI_Layer" type="CanvasLayer" parent="." unique_id=656514183]
+
+[node name="CombatHUD" parent="UI_Layer" unique_id=1921047878 instance=ExtResource("2_sugp2")]
+
+[node name="ActionMenu" parent="UI_Layer" unique_id=1871907602 instance=ExtResource("3_jyhfs")]
+
+[node name="ScreenTransition" type="CanvasLayer" parent="." unique_id=645680718]

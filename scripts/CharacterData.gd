@@ -5,6 +5,7 @@ enum Faction { PLAYER, ENEMY, ALLY }
 
 @export var character_name: String = "Soldado"
 @export var faction: Faction = Faction.PLAYER
+@export var is_leader: bool = false
 
 @export_group("Estadísticas Base")
 @export var max_hp: int = 20

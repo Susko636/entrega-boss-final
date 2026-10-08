@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cogojiye6cwlc" path="res://scenes/grid_cursor.tscn" id="1_qhp1x"]
 [ext_resource type="Texture2D" uid="uid://bc7rkw4jlh2kf" path="res://overlay_box.tres" id="2_5utsm"]
 [ext_resource type="PackedScene" uid="uid://vh216qpxc3sx" path="res://scenes/unit.tscn" id="2_ujkk0"]
+[ext_resource type="Resource" uid="uid://ctcmsoigt46g4" path="res://rout_all_enemies.tres" id="2_umtsg"]
 [ext_resource type="Resource" uid="uid://dc4qad56am4ai" path="res://hero_test.tres" id="3_5utsm"]
 [ext_resource type="Resource" uid="uid://0uumm10xipc0" path="res://enemy_test.tres" id="4_hpw63"]
 [ext_resource type="PackedScene" uid="uid://bawlvq1t2aude" path="res://scenes/action_menu.tscn" id="7_hpw63"]
@@ -17,6 +18,7 @@ sources/0 = SubResource("TileSetAtlasSource_hpw63")
 
 [node name="BattleMap" type="Node2D" unique_id=953501615]
 script = ExtResource("1_67bvd")
+current_objective = ExtResource("2_umtsg")
 
 [node name="TerrainLayer" type="TileMapLayer" parent="." unique_id=1580225865]
 
