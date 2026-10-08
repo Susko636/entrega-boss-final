@@ -48,7 +48,9 @@ func take_damage(amount: int) -> bool:
 	tween.tween_property(color_rect, "modulate", Color(2, 2, 2), 0.08)
 	tween.tween_property(color_rect, "modulate", Color(1, 1, 1), 0.08)
 	
-	if current_hp <= 0:
-		queue_free()
-		return true
-	return false
+	return current_hp <= 0
+
+static func calculate_damage(attacker: Unit, defender: Unit) -> int:
+	var atk: int = attacker.data.strength if attacker.data and "strength" in attacker.data else 0
+	var def: int = defender.data.defense if defender.data and "defense" in defender.data else 0
+	return maxi(1, atk - def)
