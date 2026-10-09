@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://cnn2tbnchrdk2"]
+
+[ext_resource type="Script" uid="uid://d4ecwo3g0vuoq" path="res://scripts/CharacterData.gd" id="1_xabuk"]
+
+[resource]
+script = ExtResource("1_xabuk")
+character_name = "Subdito"
+defense = 4
+move_range = 5
+metadata/_custom_type_script = "uid://d4ecwo3g0vuoq"

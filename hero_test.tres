@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://dc4qad56am4ai"]
+
+[ext_resource type="Script" uid="uid://d4ecwo3g0vuoq" path="res://scripts/CharacterData.gd" id="1_1gmug"]
+
+[resource]
+script = ExtResource("1_1gmug")
+character_name = "Prota"
+is_leader = true
+max_hp = 25
+strength = 10
+defense = 5
+move_range = 5
+metadata/_custom_type_script = "uid://d4ecwo3g0vuoq"

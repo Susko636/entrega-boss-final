@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ObjectiveRout" format=3 uid="uid://ctcmsoigt46g4"]
+
+[ext_resource type="Script" uid="uid://nou8tme6lnep" path="res://scripts/ObjectiveRout.gd" id="1_negx8"]
+
+[resource]
+script = ExtResource("1_negx8")
+metadata/_custom_type_script = "uid://nou8tme6lnep"
