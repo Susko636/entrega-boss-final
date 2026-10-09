@@ -7,7 +7,10 @@
 [ext_resource type="Resource" uid="uid://ctcmsoigt46g4" path="res://rout_all_enemies.tres" id="2_umtsg"]
 [ext_resource type="Resource" uid="uid://dc4qad56am4ai" path="res://hero_test.tres" id="3_5utsm"]
 [ext_resource type="Resource" uid="uid://0uumm10xipc0" path="res://enemy_test.tres" id="4_hpw63"]
+[ext_resource type="Resource" uid="uid://cnn2tbnchrdk2" path="res://ally.tres" id="6_jx2v5"]
+[ext_resource type="Resource" uid="uid://tgxjcamuwtcj" path="res://enemy_2.tres" id="7_0xsog"]
 [ext_resource type="PackedScene" uid="uid://bawlvq1t2aude" path="res://scenes/action_menu.tscn" id="7_hpw63"]
+[ext_resource type="Resource" uid="uid://0xbtxs38r7e1" path="res://enemy_3.tres" id="8_jx2v5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hpw63"]
 texture = ExtResource("2_5utsm")
@@ -35,11 +38,33 @@ color_rect = NodePath("ColorRect")
 [node name="ColorRect" parent="Units/Prota" index="0" unique_id=758769063]
 color = Color(0, 0, 1, 1)
 
+[node name="Aliado" parent="Units" unique_id=1918543188 node_paths=PackedStringArray("color_rect") instance=ExtResource("2_ujkk0")]
+position = Vector2(34, 0)
+data = ExtResource("6_jx2v5")
+color_rect = NodePath("ColorRect")
+
+[node name="ColorRect" parent="Units/Aliado" index="0" unique_id=758769063]
+color = Color(0, 0, 1, 1)
+
 [node name="Enemy" parent="Units" unique_id=809064301 instance=ExtResource("2_ujkk0")]
-position = Vector2(69, 17)
+position = Vector2(156, 139)
 data = ExtResource("4_hpw63")
 
 [node name="ColorRect" parent="Units/Enemy" index="0" unique_id=758769063]
+color = Color(0.6847434, 7.4602663e-06, 0.0448448, 1)
+
+[node name="Enemy2" parent="Units" unique_id=1356487145 instance=ExtResource("2_ujkk0")]
+position = Vector2(173, 123)
+data = ExtResource("7_0xsog")
+
+[node name="ColorRect" parent="Units/Enemy2" index="0" unique_id=758769063]
+color = Color(0.6847434, 7.4602663e-06, 0.0448448, 1)
+
+[node name="Enemy3" parent="Units" unique_id=1854369591 instance=ExtResource("2_ujkk0")]
+position = Vector2(190, 139)
+data = ExtResource("8_jx2v5")
+
+[node name="ColorRect" parent="Units/Enemy3" index="0" unique_id=758769063]
 color = Color(0.6847434, 7.4602663e-06, 0.0448448, 1)
 
 [node name="GridCursor" parent="." unique_id=787516353 instance=ExtResource("1_qhp1x")]
@@ -47,4 +72,7 @@ color = Color(0.6847434, 7.4602663e-06, 0.0448448, 1)
 [node name="ActionMenu" parent="." unique_id=1871907602 instance=ExtResource("7_hpw63")]
 
 [editable path="Units/Prota"]
+[editable path="Units/Aliado"]
 [editable path="Units/Enemy"]
+[editable path="Units/Enemy2"]
+[editable path="Units/Enemy3"]

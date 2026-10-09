@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://tgxjcamuwtcj"]
+
+[ext_resource type="Script" uid="uid://d4ecwo3g0vuoq" path="res://scripts/CharacterData.gd" id="1_ks63q"]
+
+[resource]
+script = ExtResource("1_ks63q")
+character_name = "Guerrero"
+faction = 1
+max_hp = 25
+strength = 4
+defense = 7
+move_range = 3
+metadata/_custom_type_script = "uid://d4ecwo3g0vuoq"
