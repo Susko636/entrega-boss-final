@@ -10,7 +10,7 @@ func is_victory_achieved(battle_map: Node) -> bool:
 	return false
 
 func is_defeat_incurred(battle_map: Node) -> bool:
-	var remaining_players: Array[Unit] = battle_map.get_units_of_faction(CharacterData.Faction.PLAYER)
+	var remaining_players: Array[Unit] = battle_map.get_units_of_faction(Unit.Faction.PLAYER)
 
 	if remaining_players.is_empty():
 		return true

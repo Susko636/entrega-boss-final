@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cwaqprcfn7161"]
+
+[ext_resource type="Texture2D" uid="uid://cmxcqyde3qn77" path="res://Assets/Tiny Swords/Buildings/Blue Buildings/Archery.png" id="1_q03ss"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_giedc"]
+size = Vector2(128, 128)
+
+[node name="Archery" type="StaticBody2D" unique_id=66889863]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=809254194]
+position = Vector2(64, 0)
+texture = ExtResource("1_q03ss")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1732989614]
+position = Vector2(64, 64)
+shape = SubResource("RectangleShape2D_giedc")

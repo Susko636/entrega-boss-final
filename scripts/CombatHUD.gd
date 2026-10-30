@@ -16,15 +16,15 @@ func _ready() -> void:
 
 func display_forecast(attacker: Unit, defender: Unit) -> void:
 	
-	attacker_name.text = attacker.data.character_name
+	attacker_name.text = attacker.character_name
 	attacker_hp.text = "HP: %d/%d" % [attacker.current_hp, attacker.max_hp]
-	attacker_dmg.text = "Atk: %d" % (attacker.data.strength if "strength" in attacker.data else 0)
-	attacker_def.text = "Def: %d" % (attacker.data.defense if "defense" in attacker.data else 0)
+	attacker_dmg.text = "Atk: %d" % (attacker.strength)
+	attacker_def.text = "Def: %d" % (attacker.defense)
 
-	defender_name.text = defender.data.character_name
+	defender_name.text = defender.character_name
 	defender_hp.text = "HP: %d/%d" % [defender.current_hp, defender.max_hp]
-	defender_dmg.text = "Atk: %d" % (defender.data.strength if "strength" in defender.data else 0)
-	defender_def.text = "Def: %d" % (defender.data.defense if "defense" in defender.data else 0)
+	defender_dmg.text = "Atk: %d" % (defender.strength)
+	defender_def.text = "Def: %d" % (defender.defense)
 
 	show()
 

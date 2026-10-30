@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://cvkiwrbx4cqau"]
+
+[ext_resource type="Texture2D" uid="uid://ba0fcflekw1g4" path="res://Assets/Tiny Swords/Terrain/Decorations/Bushes/Bushe1.png" id="1_wxw0i"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_erlk4"]
+atlas = ExtResource("1_wxw0i")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w2vgo"]
+atlas = ExtResource("1_wxw0i")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f8b4w"]
+atlas = ExtResource("1_wxw0i")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hpg3j"]
+atlas = ExtResource("1_wxw0i")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_thau4"]
+atlas = ExtResource("1_wxw0i")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f577p"]
+atlas = ExtResource("1_wxw0i")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_68i11"]
+atlas = ExtResource("1_wxw0i")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6xenl"]
+atlas = ExtResource("1_wxw0i")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_elxwu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_erlk4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w2vgo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f8b4w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hpg3j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_thau4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f577p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_68i11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6xenl")
+}],
+"loop": 1,
+"name": &"wind",
+"speed": 8.0
+}]
+
+[node name="Bush1" type="Node2D" unique_id=898358427]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2110567520]
+position = Vector2(32, 32)
+sprite_frames = SubResource("SpriteFrames_elxwu")
+animation = &"wind"
+autoplay = "wind"
+frame_progress = 0.62037164

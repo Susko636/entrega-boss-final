@@ -1,14 +1,32 @@
 class_name Unit
 extends Node2D
 
-@export var data: CharacterData
+signal movement_finished
+signal attack_finished
+signal damage_taken(remaining_hp: int)
+signal defeated
 
-@export var color_rect: ColorRect
+enum Faction { PLAYER, ENEMY, ALLY }
 
+@export_group("Identidad")
+@export var character_name: String = "Recluta"
+@export var faction: Faction = Faction.PLAYER
+
+@export_group("Estadísticas")
+@export var max_hp: int = 10
+@export var strength: int = 5
+@export var defense: int = 2
+@export var move_range: int = 3
+@export var is_leader: bool = false
+
+var unit_class: String = str(get_name())
+var current_hp: int = 10
 var grid_coord: Vector2i = Vector2i.ZERO
 
-var current_hp: int = 10
-var max_hp: int = 10
+@onready var sprite: AnimatedSprite2D = get_node_or_null("AnimatedSprite2D")
+@onready var state_machine: UnitStateMachine = $StateMachine
+
+const CELL_CENTER_OFFSET: Vector2 = Vector2(32, 32)
 
 var has_acted: bool = false:
 	set(value):
@@ -16,41 +34,77 @@ var has_acted: bool = false:
 		modulate = Color(0.5, 0.5, 0.5) if has_acted else Color.WHITE
 
 func _ready() -> void:
-	grid_coord = Grid.world_to_grid(position)
+	current_hp = max_hp
+	grid_coord = Grid.world_to_grid(global_position)
 	snap_to_grid()
-	
-	if data:
-		max_hp = data.max_hp if "max_hp" in data else 10
-		current_hp = max_hp
+	state_machine.init_machine(self)
 
 func snap_to_grid() -> void:
-	position = Grid.grid_to_world(grid_coord)
+	global_position = Grid.grid_to_world(grid_coord) + CELL_CENTER_OFFSET
 
-func follow_path(path: Array[Vector2i]) -> Signal:
-	
+# Desplazamiento por grilla usando transiciones de estado
+func follow_path(path: Array[Vector2i]) -> void:
 	if path.is_empty():
-		return get_tree().process_frame
+		movement_finished.emit()
+		return
 
-	grid_coord = path.back()
+	state_machine.transition_to(&"walkstate")
 	var tween: Tween = create_tween()
 
 	for cell_step in path:
-		var step_pos: Vector2 = Grid.grid_to_world(cell_step)
-		tween.tween_property(self, "position", step_pos, 0.12).set_trans(Tween.TRANS_LINEAR)
+		if sprite:
+			if cell_step.x > grid_coord.x:
+				sprite.flip_h = false
+			elif cell_step.x < grid_coord.x:
+				sprite.flip_h = true
 
-	return tween.finished
-	
+		grid_coord = cell_step
+		var step_pos: Vector2 = Grid.grid_to_world(cell_step) + CELL_CENTER_OFFSET
+		tween.tween_property(self, "global_position", step_pos, 0.18).set_trans(Tween.TRANS_LINEAR)
+
+	await tween.finished
+	state_machine.transition_to(&"idlestate")
+	movement_finished.emit()
+
+# Animación de ataque delegada al estado y sprite
+func play_attack_animation(target_world_pos: Vector2) -> void:
+	if sprite:
+		sprite.flip_h = target_world_pos.x < global_position.x
+
+	state_machine.transition_to(&"attackstate")
+
+	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation("attack"):
+		await sprite.animation_finished
+	else:
+		var original_pos: Vector2 = global_position
+		var dir: Vector2 = (target_world_pos - original_pos).normalized() * 16.0
+		var tween: Tween = create_tween()
+		tween.tween_property(self, "global_position", original_pos + dir, 0.10).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tween.tween_property(self, "global_position", original_pos, 0.10).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+		await tween.finished
+
+	state_machine.transition_to(&"idle")
+	attack_finished.emit()
+
+# Recepción de daño y flash
 func take_damage(amount: int) -> bool:
 	current_hp = maxi(0, current_hp - amount)
-	print(data.character_name, " recibió ", amount, " de daño. HP restante: ", current_hp, "/", max_hp)
-	
-	var tween = create_tween()
-	tween.tween_property(color_rect, "modulate", Color(2, 2, 2), 0.08)
-	tween.tween_property(color_rect, "modulate", Color(1, 1, 1), 0.08)
-	
-	return current_hp <= 0
+	damage_taken.emit(current_hp)
 
+	# Flash blanco de impacto siempre sobre el sprite (o self si no hubiera)
+	var target_visual: CanvasItem = sprite if sprite else self
+	var tween: Tween = create_tween()
+	tween.tween_property(target_visual, "modulate", Color(2.5, 2.5, 2.5), 0.08)
+	
+	# El sprite siempre vuelve a WHITE puro (el filtro de acción lo maneja la raíz 'self')
+	tween.tween_property(target_visual, "modulate", Color.WHITE, 0.08)
+
+	var is_dead: bool = current_hp <= 0
+	
+	if is_dead:
+		defeated.emit()
+		
+	return is_dead
+	
 static func calculate_damage(attacker: Unit, defender: Unit) -> int:
-	var atk: int = attacker.data.strength if attacker.data and "strength" in attacker.data else 0
-	var def: int = defender.data.defense if defender.data and "defense" in defender.data else 0
-	return maxi(1, atk - def)
+	return maxi(1, attacker.strength - defender.defense)

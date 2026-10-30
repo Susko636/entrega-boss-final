@@ -15,6 +15,8 @@ var bounds: Vector2i = Vector2i(15, 10)
 var is_active: bool = true
 
 func _ready() -> void:
+	
+	cell = Grid.world_to_grid(position)
 	update_visual_position()
 
 func _unhandled_input(event: InputEvent) -> void:

@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://b3745p4bosl46"]
+
+[ext_resource type="Texture2D" uid="uid://cxwxh5ilhguic" path="res://Assets/Tiny Swords/Terrain/Decorations/Bushes/Bushe3.png" id="1_qe5kr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pligk"]
+atlas = ExtResource("1_qe5kr")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6jt57"]
+atlas = ExtResource("1_qe5kr")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k8e4l"]
+atlas = ExtResource("1_qe5kr")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vbl3j"]
+atlas = ExtResource("1_qe5kr")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rmiy8"]
+atlas = ExtResource("1_qe5kr")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_627vj"]
+atlas = ExtResource("1_qe5kr")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e5wd6"]
+atlas = ExtResource("1_qe5kr")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7xeux"]
+atlas = ExtResource("1_qe5kr")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_giedc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pligk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6jt57")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k8e4l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vbl3j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rmiy8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_627vj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e5wd6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7xeux")
+}],
+"loop": 1,
+"name": &"wind",
+"speed": 8.0
+}]
+
+[node name="Bush2" type="Node2D" unique_id=1087430676]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1841075602]
+position = Vector2(32, 32)
+sprite_frames = SubResource("SpriteFrames_giedc")
+animation = &"wind"
+autoplay = "wind"
+frame = 3
+frame_progress = 0.3037305

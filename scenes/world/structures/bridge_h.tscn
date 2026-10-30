@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bmfbrj3h48sas"]
+
+[ext_resource type="Texture2D" uid="uid://cafhccgnn6c7x" path="res://Assets/Tiny Swords/Terrain/Decorations/Mix/Bridge_All.png" id="1_l6cb4"]
+
+[node name="BridgeH" type="StaticBody2D" unique_id=1847939522]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2015502030]
+position = Vector2(99.75, 25)
+scale = Vector2(1.0333333, 1)
+texture = ExtResource("1_l6cb4")
+region_enabled = true
+region_rect = Rect2(14.851028, -0.17529297, 165.6047, 64.56977)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1501204692]

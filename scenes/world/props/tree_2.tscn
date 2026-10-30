@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://boj6qy461wex0"]
+
+[ext_resource type="Texture2D" uid="uid://0agvnvyfaumn" path="res://Assets/Tiny Swords/Terrain/Resources/Wood/Trees/Tree3.png" id="1_6ehx1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swgpd"]
+atlas = ExtResource("1_6ehx1")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b2ffg"]
+atlas = ExtResource("1_6ehx1")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ad6fx"]
+atlas = ExtResource("1_6ehx1")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_58vxp"]
+atlas = ExtResource("1_6ehx1")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vw3t4"]
+atlas = ExtResource("1_6ehx1")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uandq"]
+atlas = ExtResource("1_6ehx1")
+region = Rect2(960, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h08ff"]
+atlas = ExtResource("1_6ehx1")
+region = Rect2(1152, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k1pky"]
+atlas = ExtResource("1_6ehx1")
+region = Rect2(1344, 0, 192, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_giedc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swgpd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b2ffg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ad6fx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_58vxp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vw3t4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uandq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h08ff")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k1pky")
+}],
+"loop": 1,
+"name": &"wind",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_giedc"]
+size = Vector2(64, 64)
+
+[node name="Tree2" type="StaticBody2D" unique_id=1357361159]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=989408281]
+position = Vector2(32, -32)
+sprite_frames = SubResource("SpriteFrames_giedc")
+animation = &"wind"
+autoplay = "wind"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=283477068]
+position = Vector2(32, 32)
+shape = SubResource("RectangleShape2D_giedc")

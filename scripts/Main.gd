@@ -1,34 +1,43 @@
 class_name Main
 extends Node
 
+@export var current_level_scene: PackedScene = preload("res://levels/level_00.tscn") 
+
 @onready var battle_map: BattleMap = $SceneContainer/BattleMap
 @onready var action_menu: ActionMenu = $UI_Layer/ActionMenu
 @onready var combat_hud: CombatHUD = $UI_Layer/CombatHUD
+@onready var unit_info_card: UnitInfoCard = $UI_Layer/UnitInfoCard
+@onready var speech_bubble: SpeechBubble = $UI_Layer/SpeechBubble
 
 var game_ended: bool = false
 
 func _ready() -> void:
+		
+		battle_map.unit_action_needed.connect(_on_unit_action_needed)
+		action_menu.action_selected.connect(_on_action_selected)
+		action_menu.cancelled.connect(_on_action_cancelled)
 	
-	battle_map.unit_action_needed.connect(_on_unit_action_needed)
-	action_menu.action_selected.connect(_on_action_selected)
-	action_menu.cancelled.connect(_on_action_cancelled)
+		battle_map.match_won.connect(_on_match_won)
+		battle_map.match_lost.connect(_on_match_lost)
 	
-	battle_map.match_won.connect(_on_match_won)
-	battle_map.match_lost.connect(_on_match_lost)
+		battle_map.combat_forecast_requested.connect(_on_combat_forecast_requested)
+		battle_map.combat_forecast_cleared.connect(_on_combat_forecast_cleared)
 	
-	battle_map.combat_forecast_requested.connect(_on_combat_forecast_requested)
-	battle_map.combat_forecast_cleared.connect(_on_combat_forecast_cleared)
-	
-	battle_map.phase_changed.connect(_on_phase_changed)
+		battle_map.phase_changed.connect(_on_phase_changed)
+		battle_map.cursor_hovered_unit.connect(_on_cursor_hovered_unit)
 	
 func _on_unit_action_needed(can_attack: bool, menu_pos: Vector2) -> void:
-	action_menu.open(can_attack, menu_pos)
+	
+	var can_interact: bool = battle_map.can_unit_interact()
+	action_menu.open(can_attack, can_interact, menu_pos)
 
 func _on_action_selected(action: String) -> void:
+	
 	action_menu.close()
 	battle_map.execute_action(action)
 
 func _on_action_cancelled() -> void:
+	
 	action_menu.close()
 	battle_map.cancel_move()
 	
@@ -38,20 +47,31 @@ func _on_combat_forecast_requested(attacker: Unit, defender: Unit) -> void:
 func _on_combat_forecast_cleared() -> void:
 	combat_hud.close()
 	
+func _on_cursor_hovered_unit(unit: Unit) -> void:
+	
+	if unit != null:
+		unit_info_card.display_unit(unit)
+	else:
+		unit_info_card.clear()
+	
 func _unhandled_input(event: InputEvent) -> void:
+	
 	if game_ended and event.is_action_pressed("aceptar"):
 		get_viewport().set_input_as_handled()
 		get_tree().reload_current_scene()
 
 func _on_match_won() -> void:
+	
 	game_ended = true
 	_show_end_game_banner("¡VICTORIA!", Color(0.9, 0.8, 0.2))
 
 func _on_match_lost() -> void:
+	
 	game_ended = true
 	_show_end_game_banner("DERROTA...", Color(0.9, 0.2, 0.2))
 
 func _show_end_game_banner(title_text: String, title_color: Color) -> void:
+	
 	var overlay = CenterContainer.new()
 	overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
 	overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -76,9 +96,10 @@ func _show_end_game_banner(title_text: String, title_color: Color) -> void:
 
 	$UI_Layer.add_child(overlay)
 
-func _on_phase_changed(phase: BattleMap.Phase) -> void:
-	var text: String = "FASE ALIADA" if phase == BattleMap.Phase.PLAYER_PHASE else "FASE ENEMIGA"
-	var bg_color: Color = Color(0.1, 0.3, 0.8, 0.85) if phase == BattleMap.Phase.PLAYER_PHASE else Color(0.8, 0.15, 0.15, 0.85)
+func _on_phase_changed(phase: StringName) -> void:
+	
+	var text: String = "FASE ALIADA" if phase == TurnManager.PHASE_PLAYER else "FASE ENEMIGA"
+	var bg_color: Color = Color(0.1, 0.3, 0.8, 0.85) if phase == TurnManager.PHASE_PLAYER else Color(0.8, 0.15, 0.15, 0.85)
 	_show_phase_banner(text, bg_color)
 
 func _show_phase_banner(text: String, background_color: Color) -> void:

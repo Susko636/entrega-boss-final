@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://vh216qpxc3sx"]
+
+[ext_resource type="Script" uid="uid://bg2j6k1g461b0" path="res://scripts/Unit.gd" id="1_o7ajc"]
+[ext_resource type="Script" uid="uid://kk32m70bedyl" path="res://scripts/unitState/UnitStateMachine.gd" id="2_mvd5b"]
+[ext_resource type="Script" uid="uid://b2o1gqyo0io2w" path="res://scripts/unitState/IdleState.gd" id="3_nfpyq"]
+[ext_resource type="Script" uid="uid://cascdeuut8vas" path="res://scripts/unitState/WalkState.gd" id="4_bqfjd"]
+[ext_resource type="Script" uid="uid://cas7upge1ih4k" path="res://scripts/unitState/AttackState.gd" id="5_lbhm6"]
+
+[node name="Unit" type="Node2D" unique_id=176907120]
+script = ExtResource("1_o7ajc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=530722957]
+animation = &""
+frame_progress = 0.78522044
+centered = false
+
+[node name="StateMachine" type="Node2D" parent="." unique_id=1142180245]
+script = ExtResource("2_mvd5b")
+
+[node name="IdleState" type="Node2D" parent="StateMachine" unique_id=1727268172]
+script = ExtResource("3_nfpyq")
+
+[node name="WalkState" type="Node2D" parent="StateMachine" unique_id=1083316330]
+script = ExtResource("4_bqfjd")
+
+[node name="AttackState" type="Node2D" parent="StateMachine" unique_id=301703771]
+script = ExtResource("5_lbhm6")

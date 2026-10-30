@@ -1,6 +1,48 @@
 [gd_scene format=3 uid="uid://bawlvq1t2aude"]
 
 [ext_resource type="Script" uid="uid://3fxfkb5djcj6" path="res://scripts/ActionMenu.gd" id="1_m2v2x"]
+[ext_resource type="Texture2D" uid="uid://b02lq3jy6owrv" path="res://Assets/Tiny Swords/UI Elements/UI Elements/Wood Table/WoodTable.png" id="2_irjmx"]
+[ext_resource type="Texture2D" uid="uid://dn6ga1461mamc" path="res://Assets/Tiny Swords/UI Elements/UI Elements/Buttons/BigBlueButton_Regular.png" id="3_03mqw"]
+[ext_resource type="Texture2D" uid="uid://bdkwgbgbgyb57" path="res://Assets/Tiny Swords/UI Elements/UI Elements/Buttons/BigBlueButton_Pressed.png" id="4_03mqw"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ganw1"]
+texture = ExtResource("2_irjmx")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 16.0
+expand_margin_top = 22.0
+expand_margin_right = 16.0
+expand_margin_bottom = 22.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_elxwu"]
+texture = ExtResource("3_03mqw")
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_irjmx"]
+texture = ExtResource("4_03mqw")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_03mqw"]
+load_path = "res://.godot/imported/BigBlueButton_Regular.png-b93218cb8470d107c7398881c1cb79d2.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u14yf"]
+texture = SubResource("CompressedTexture2D_03mqw")
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_u14yf"]
+load_path = "res://.godot/imported/BigBlueButton_Regular.png-b93218cb8470d107c7398881c1cb79d2.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sqd1j"]
+texture = SubResource("CompressedTexture2D_u14yf")
+expand_margin_left = 3.0
+expand_margin_top = 3.0
+expand_margin_right = 3.0
+expand_margin_bottom = 3.0
 
 [node name="ActionMenu" type="Control" unique_id=1871907602]
 layout_mode = 3
@@ -9,18 +51,48 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_m2v2x")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=511598964]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-focus_mode = 2
+[node name="MenuContainer" type="PanelContainer" parent="." unique_id=2017622489]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 111.0
+offset_bottom = 139.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_ganw1")
 
-[node name="AttackButton" type="Button" parent="VBoxContainer" unique_id=971856521]
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuContainer" unique_id=511598964]
 layout_mode = 2
+focus_mode = 2
+theme_override_constants/separation = 26
+
+[node name="AttackButton" type="Button" parent="MenuContainer/VBoxContainer" unique_id=971856521]
+custom_minimum_size = Vector2(80, 32)
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, -6)
 theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxTexture_elxwu")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_irjmx")
+theme_override_styles/hover = SubResource("StyleBoxTexture_u14yf")
+theme_override_styles/focus = SubResource("StyleBoxTexture_sqd1j")
 text = "Atacar"
 
-[node name="WaitButton" type="Button" parent="VBoxContainer" unique_id=859175071]
+[node name="InteractButton" type="Button" parent="MenuContainer/VBoxContainer" unique_id=624075896]
+custom_minimum_size = Vector2(80, 32)
 layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, -6)
 theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxTexture_elxwu")
+text = "Interarctuar"
+
+[node name="WaitButton" type="Button" parent="MenuContainer/VBoxContainer" unique_id=974721073]
+custom_minimum_size = Vector2(80, 32)
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, -6)
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxTexture_elxwu")
 text = "Esperar"

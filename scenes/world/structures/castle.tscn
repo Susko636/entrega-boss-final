@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://ccwirkto5284c"]
+
+[ext_resource type="Texture2D" uid="uid://cclsyksckq1fr" path="res://Assets/Tiny Swords/Buildings/Blue Buildings/Castle.png" id="1_6csa3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_67ow0"]
+size = Vector2(256, 128)
+
+[node name="Castle" type="StaticBody2D" unique_id=842460247]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=629889280]
+position = Vector2(128, 0)
+texture = ExtResource("1_6csa3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1263385380]
+position = Vector2(128, 64)
+shape = SubResource("RectangleShape2D_67ow0")

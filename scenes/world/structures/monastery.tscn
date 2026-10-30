@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bgfb65278m62p"]
+
+[ext_resource type="Texture2D" uid="uid://3riuolh6bxqk" path="res://Assets/Tiny Swords/Buildings/Blue Buildings/Monastery.png" id="1_bwluo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_giedc"]
+size = Vector2(130, 64)
+
+[node name="Monastery" type="StaticBody2D" unique_id=483303211]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1290972236]
+position = Vector2(64, -64)
+texture = ExtResource("1_bwluo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1363103610]
+position = Vector2(64, 32)
+shape = SubResource("RectangleShape2D_giedc")

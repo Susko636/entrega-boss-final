@@ -1,0 +1,134 @@
+[gd_scene format=3 uid="uid://b7p4xmawpr1jk"]
+
+[ext_resource type="Texture2D" uid="uid://ceal8ej5fjmdg" path="res://Assets/Tiny Swords/UI Elements/UI Elements/Papers/SpecialPaper.png" id="1_4ll5t"]
+[ext_resource type="Script" uid="uid://cpwfgwvcvlyep" path="res://scripts/UnitInfoCard.gd" id="1_txbra"]
+[ext_resource type="Texture2D" uid="uid://dgy1e0k8l6w6r" path="res://Assets/Tiny Swords/UI Elements/UI Elements/Bars/SmallBar_Base.png" id="3_oyccn"]
+[ext_resource type="Texture2D" uid="uid://bd7ktqfmyjjn6" path="res://Assets/Tiny Swords/UI Elements/UI Elements/Bars/SmallBar_Fill.png" id="4_vovsl"]
+[ext_resource type="Texture2D" uid="uid://dbxbxln3ivm7w" path="res://Assets/Tiny Swords/UI Elements/UI Elements/Icons/Icon_05.png" id="5_u04vh"]
+[ext_resource type="Texture2D" uid="uid://dr8vth4prm44l" path="res://Assets/Tiny Swords/UI Elements/UI Elements/Icons/Icon_08.png" id="5_vovsl"]
+[ext_resource type="Texture2D" uid="uid://b7laneqsvo6re" path="res://Assets/Tiny Swords/UI Elements/UI Elements/Icons/Icon_06.png" id="6_xb11a"]
+
+[node name="UnitInfoCard" type="Control" unique_id=622452856]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_txbra")
+
+[node name="Background" type="NinePatchRect" parent="." unique_id=450832835]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 320.0
+offset_bottom = 448.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_4ll5t")
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=2048398482]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 206.0
+offset_bottom = 458.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 26
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1168798110]
+layout_mode = 2
+
+[node name="TopBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=458393785]
+layout_mode = 2
+
+[node name="IconAnchor" type="Control" parent="MarginContainer/VBoxContainer/TopBar" unique_id=2131882589]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="IconClass" type="Sprite2D" parent="MarginContainer/VBoxContainer/TopBar/IconAnchor" unique_id=225767372]
+unique_name_in_owner = true
+position = Vector2(32, 32)
+scale = Vector2(0.5, 0.5)
+
+[node name="Name" type="Label" parent="MarginContainer/VBoxContainer/TopBar" unique_id=165012637]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HpSection" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=172240135]
+layout_mode = 2
+size_flags_vertical = 0
+accessibility_region = true
+
+[node name="BarCenter" type="CenterContainer" parent="MarginContainer/VBoxContainer/HpSection" unique_id=2037747690]
+propagate_maximum_size = false
+layout_mode = 2
+offset_transform_enabled = true
+
+[node name="HpProgressBar" type="TextureProgressBar" parent="MarginContainer/VBoxContainer/HpSection/BarCenter" unique_id=971426201]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 19)
+layout_mode = 2
+offset_transform_enabled = true
+max_value = 20.0
+value = 20.0
+texture_under = ExtResource("3_oyccn")
+texture_progress = ExtResource("4_vovsl")
+texture_progress_offset = Vector2(10, -22)
+
+[node name="Hp" type="Label" parent="MarginContainer/VBoxContainer/HpSection/BarCenter" unique_id=165149886]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+horizontal_alignment = 1
+
+[node name="StatsGrid" type="GridContainer" parent="MarginContainer/VBoxContainer" unique_id=1364998751]
+layout_mode = 2
+columns = 2
+
+[node name="AtkCenter" type="CenterContainer" parent="MarginContainer/VBoxContainer/StatsGrid" unique_id=302744019]
+layout_mode = 2
+
+[node name="AtkIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/StatsGrid/AtkCenter" unique_id=655317265]
+layout_mode = 2
+texture = ExtResource("5_u04vh")
+
+[node name="Atk" type="Label" parent="MarginContainer/VBoxContainer/StatsGrid" unique_id=839524439]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DefCenter" type="CenterContainer" parent="MarginContainer/VBoxContainer/StatsGrid" unique_id=777767400]
+layout_mode = 2
+
+[node name="DefIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/StatsGrid/DefCenter" unique_id=691501550]
+layout_mode = 2
+texture = ExtResource("6_xb11a")
+
+[node name="Def" type="Label" parent="MarginContainer/VBoxContainer/StatsGrid" unique_id=1625091060]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RangeCenter" type="CenterContainer" parent="MarginContainer/VBoxContainer/StatsGrid" unique_id=194875563]
+layout_mode = 2
+
+[node name="RangeIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/StatsGrid/RangeCenter" unique_id=123593886]
+modulate = Color(0.12941177, 0.90588236, 0, 1)
+layout_mode = 2
+texture = ExtResource("5_vovsl")
+flip_h = true
+
+[node name="Range" type="Label" parent="MarginContainer/VBoxContainer/StatsGrid" unique_id=1647042138]
+unique_name_in_owner = true
+layout_mode = 2
