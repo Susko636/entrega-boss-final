@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://kudyxcl3oko8" path="res://scenes/world/structures/goblin_house.tscn" id="2_mllcm"]
 [ext_resource type="Script" uid="uid://b3b65wbsfvypj" path="res://scripts/conditionVictory/DefeatAllEnemiesCondition.gd" id="2_qdeet"]
 [ext_resource type="PackedScene" uid="uid://duetweuxeqyy6" path="res://scenes/world/units/allys/lancer.tscn" id="3_qdeet"]
+[ext_resource type="Script" uid="uid://cp5u7yi1htjnq" path="res://scripts/Interactables/DialogueTrigger.gd" id="3_y72ps"]
 [ext_resource type="PackedScene" uid="uid://boj6qy461wex0" path="res://scenes/world/props/tree_2.tscn" id="4_q7ibo"]
 [ext_resource type="PackedScene" uid="uid://4c5tlmyusvd" path="res://scenes/world/units/allys/warrior.tscn" id="4_y72ps"]
 [ext_resource type="PackedScene" uid="uid://clroswe6r5yct" path="res://scenes/world/props/tree_1.tscn" id="5_cg8v6"]
@@ -21,6 +22,11 @@ metadata/_custom_type_script = "uid://b3b65wbsfvypj"
 [node name="BattleMap" unique_id=953501615 instance=ExtResource("1_ty3hu")]
 map_size = Vector2i(100, 100)
 victory_condition = SubResource("Resource_xw3ee")
+
+[node name="LancerTrigger" type="Node2D" parent="Triggers" parent_id_path=PackedInt32Array(560653938) index="0" unique_id=20580628]
+script = ExtResource("3_y72ps")
+dialogue_text = "Debemos acabar con todos esos Goblings para irnos de aquí"
+trigger_cells = Array[Vector2i]([Vector2i(4, 8)])
 
 [node name="GridCursor" parent="." index="4" unique_id=787516353]
 position = Vector2(192, 576)

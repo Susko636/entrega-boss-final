@@ -36,6 +36,8 @@ victory_condition = SubResource("Resource_3qbue")
 
 [node name="LancerTrigger" type="Node2D" parent="Triggers" parent_id_path=PackedInt32Array(560653938) index="0" unique_id=657870081]
 script = ExtResource("3_eo6r7")
+dialogue_text = "¡Holaa! 
+Tienes que dirigirte al puente que esta al SUR para tu mision"
 trigger_cells = Array[Vector2i]([Vector2i(7, 7)])
 
 [node name="Sprite2D" parent="BackGround" parent_id_path=PackedInt32Array(262050121) index="0" unique_id=1028829592]

@@ -49,6 +49,8 @@ repeat_size = Vector2(64, 64)
 
 [node name="Sprite2D" type="Sprite2D" parent="BackGround" unique_id=1028829592]
 texture_repeat = 2
+position = Vector2(1231.5, 820)
+scale = Vector2(2.2026367, 1.8007813)
 texture = ExtResource("4_t3v4a")
 region_enabled = true
 region_rect = Rect2(0, 0, 2048, 2048)
