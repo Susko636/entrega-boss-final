@@ -33,6 +33,10 @@ metadata/_custom_type_script = "uid://dccrjer0atyib"
 [node name="Level_00" unique_id=953501615 instance=ExtResource("1_yi81j")]
 map_size = Vector2i(100, 100)
 victory_condition = SubResource("Resource_3qbue")
+level_intro_text = "¡Bienvenido!
+Flechas / WASD: Mover cursor
+1 / , : Seleccionar / Atacar
+2 / . : Cancelar"
 
 [node name="LancerTrigger" type="Node2D" parent="Triggers" parent_id_path=PackedInt32Array(560653938) index="0" unique_id=657870081]
 script = ExtResource("3_eo6r7")

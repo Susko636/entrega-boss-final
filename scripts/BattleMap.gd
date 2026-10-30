@@ -21,6 +21,7 @@ const CELL_SIZE: Vector2 = Vector2(64, 64)
 
 @export_group("Objetivo de Misión")
 @export var victory_condition: VictoryCondition
+@export_multiline var level_intro_text: String = ""
 
 var current_state: BattleMapState
 var states: Dictionary = {}

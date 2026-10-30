@@ -37,6 +37,15 @@ func load_level(index: int) -> void:
 	scene_container.add_child(battle_map)
 
 	_connect_battle_map_signals(battle_map)
+	
+	#tutorial
+	if battle_map.level_intro_text != "":
+		battle_map.set_process_unhandled_input(false)
+		
+		speech_bubble.display_centered_text(battle_map.level_intro_text)
+		await speech_bubble.closed
+		
+		battle_map.set_process_unhandled_input(true)
 
 func _connect_battle_map_signals(map: BattleMap) -> void:
 	

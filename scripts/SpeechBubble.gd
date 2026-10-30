@@ -50,3 +50,26 @@ func close() -> void:
 	await tween.finished
 	hide()
 	closed.emit()
+
+#funcion temporal para los controles
+func display_centered_text(text: String) -> void:
+	text_label.text = text
+	show()
+	
+	await get_tree().process_frame
+	
+	var viewport_size: Vector2 = get_viewport_rect().size
+	var bubble_size: Vector2 = size
+	
+	global_position = (viewport_size - bubble_size) / 2.0
+	
+	pivot_offset = bubble_size / 2.0
+	scale = Vector2(0.3, 0.3)
+	modulate.a = 0.0
+	
+	var tween = create_tween().set_parallel(true)
+	tween.tween_property(self, "scale", Vector2.ONE, 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "modulate:a", 1.0, 0.1)
+	
+	await tween.finished
+	is_waiting_input = true
