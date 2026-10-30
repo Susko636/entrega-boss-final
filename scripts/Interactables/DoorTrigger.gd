@@ -4,6 +4,7 @@ extends MapInteractionTrigger
 @export var door_collider: CollisionShape2D
 
 func trigger_interaction(actor: Unit) -> void:
+	
 	if not is_active:
 		return
 	if door_collider:

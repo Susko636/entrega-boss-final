@@ -99,6 +99,10 @@ y_sort_enabled = true
 z_index = 5
 y_sort_enabled = true
 
+[node name="Structures" type="Node2D" parent="Props" unique_id=2053149053]
+
+[node name="Enviroment" type="Node2D" parent="Props" unique_id=1036242763]
+
 [node name="NPCs" type="Node2D" parent="." unique_id=1079821450]
 z_index = 5
 y_sort_enabled = true

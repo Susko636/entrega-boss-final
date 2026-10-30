@@ -67,7 +67,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			visible_buttons[current_idx + 1].grab_focus()
 		return
 
-	# Navegación hacia arriba (con tope en el primer elemento)
 	if event.is_action_pressed("mover_arriba"):
 		get_viewport().set_input_as_handled()
 		if current_idx > 0:
@@ -88,7 +87,6 @@ func _unhandled_input(event: InputEvent) -> void:
 func setup_interact(can_interact: bool) -> void:
 
 	interact_button.visible = can_interact
-	# O si preferís dejarlo visible pero deshabilitado:
 	# interact_button.disabled = not can_interact
 
 func _get_visible_buttons() -> Array[Button]:

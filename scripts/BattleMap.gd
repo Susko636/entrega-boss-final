@@ -60,6 +60,7 @@ func _setup_camera_limits() -> void:
 	camera.limit_bottom = map_size.y * 64	
 	
 func is_cell_blocked_by_physics(cell: Vector2i) -> bool:
+	
 	var world_center: Vector2 = Grid.grid_to_world(cell) + Vector2(32, 32)
 	
 	var space_state = get_world_2d().direct_space_state
@@ -85,6 +86,7 @@ func register_units() -> void:
 					units_by_cell[child.grid_coord] = child
 
 	var npcs = get_node_or_null("NPCs")
+	
 	if npcs:
 		for child in npcs.get_children():
 			if child is Unit:
@@ -99,6 +101,7 @@ func register_units() -> void:
 				units_by_cell[child.grid_coord] = child
 
 func _on_cursor_cell_changed(new_cell: Vector2i) -> void:
+	
 	if camera:
 		camera.position = Grid.grid_to_world(new_cell) + Vector2(32, 32)
 
@@ -109,10 +112,12 @@ func _on_cursor_cell_changed(new_cell: Vector2i) -> void:
 		current_state.on_cursor_cell_changed(new_cell)
 
 func _on_cursor_accept(selected_cell: Vector2i) -> void:
+	
 	if current_state:
 		current_state.on_cursor_accept(selected_cell)
 
 func _on_cursor_cancel(selected_cell: Vector2i) -> void:
+	
 	if current_state:
 		current_state.on_cursor_cancel(selected_cell)
 
@@ -120,6 +125,7 @@ func has_adjacent_enemy(cell: Vector2i) -> bool:
 	return get_adjacent_enemies(cell).size() > 0
 
 func get_adjacent_enemies(cell: Vector2i) -> Array[Vector2i]:
+	
 	var enemies: Array[Vector2i] = []
 	var directions: Array[Vector2i] = [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]
 	for dir in directions:
@@ -145,16 +151,14 @@ func execute_action(action: String) -> void:
 				change_map_state(&"menu")
 
 func cancel_move() -> void:
-	# Si la unidad se había movido a una casilla diferente, revertimos el diccionario
+
 	if unit_destination_cell != unit_original_cell:
 		units_by_cell.erase(unit_destination_cell)
 		units_by_cell[unit_original_cell] = selected_unit
 
-	# Revertimos posición interna y visual de la unidad
 	selected_unit.grid_coord = unit_original_cell
 	selected_unit.snap_to_grid()
 
-	# Reubicamos el cursor y volvemos al estado de movimiento
 	cursor.position = Grid.grid_to_world(unit_original_cell)
 	change_map_state(&"move")
 	
@@ -205,17 +209,14 @@ func _try_attack_target(target_cell: Vector2i) -> void:
 	var target_unit: Unit = units_by_cell[target_cell]
 	print("Iniciando combate: ", selected_unit.character_name, " vs ", target_unit.character_name)
 
-	# Delegamos la secuencia completa al CombatResolver
 	var result: CombatResolver.CombatResult = await CombatResolver.execute_combat(selected_unit, target_unit)
 
-	# Manejo si muere el defensor
 	if result.defender_died:
 		print(target_unit.character_name, " ha caído.")
 		_destroy_unit(target_unit)
 		_finish_unit_turn()
 		return
 
-	# Manejo si muere el atacante en el contraataque
 	if result.attacker_died:
 		print(selected_unit.character_name, " ha caído en el contraataque.")
 		_destroy_unit(selected_unit)
@@ -436,6 +437,7 @@ func _process_enemy_turn(enemy: Unit) -> void:
 	await get_tree().create_timer(0.2).timeout
 
 func get_units_of_faction(faction: Unit.Faction) -> Array[Unit]:
+	
 	var result: Array[Unit] = []
 	for unit in units_by_cell.values():
 		if is_instance_valid(unit) and unit.faction == faction:
@@ -443,6 +445,7 @@ func get_units_of_faction(faction: Unit.Faction) -> Array[Unit]:
 	return result
 
 func _get_valid_attack_spots_for_target(target_cell: Vector2i, reachable: Dictionary, moving_unit: Unit) -> Array[Vector2i]:
+	
 	var spots: Array[Vector2i] = []
 	var directions: Array[Vector2i] = [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]
 	for dir in directions:
@@ -453,6 +456,7 @@ func _get_valid_attack_spots_for_target(target_cell: Vector2i, reachable: Dictio
 	return spots
 
 func _get_closest_unit(origin: Vector2i, targets: Array[Unit]) -> Unit:
+	
 	var closest: Unit = targets[0]
 	var min_distance: int = 999999
 	for target in targets:
@@ -463,6 +467,7 @@ func _get_closest_unit(origin: Vector2i, targets: Array[Unit]) -> Unit:
 	return closest
 
 func _get_best_approach_cell(reachable: Dictionary, target_cell: Vector2i, moving_unit: Unit) -> Vector2i:
+	
 	var best_cell: Vector2i = moving_unit.grid_coord
 	var min_distance: int = abs(best_cell.x - target_cell.x) + abs(best_cell.y - target_cell.y)
 
@@ -575,6 +580,7 @@ func get_path_for_faction(start: Vector2i, target: Vector2i, max_range: int, fac
 	return path
 
 func _get_adjacent_player_targets(cell: Vector2i) -> Array[Unit]:
+	
 	var players: Array[Unit] = []
 	var directions: Array[Vector2i] = [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]
 	for dir in directions:
@@ -627,7 +633,7 @@ func _init_map_states() -> void:
 func change_map_state(state_name: StringName) -> void:
 	
 	if not states.has(state_name):
-		push_warning("El estado de mapa '%s' no existe." % state_name)
+		#push_warning("El estado de mapa '%s' no existe." % state_name)
 		return
 	if current_state:
 		current_state.exit()
@@ -650,14 +656,13 @@ func check_mission_status() -> void:
 		return
 
 #func _is_victory_achieved() -> bool:
-	#
+
 	#match objective_type:
 		#ObjectiveType.ROUT_ENEMIES:
 			#var enemies: Array[Unit] = get_units_of_faction(Unit.Faction.ENEMY)
 			#return enemies.is_empty()
 #
 		#ObjectiveType.REACH_ESCAPE_POINT:
-			## Victoria si una unidad del jugador (o el líder) se encuentra en la casilla meta
 			#if units_by_cell.has(target_escape_cell):
 				#var occupier: Unit = units_by_cell[target_escape_cell]
 				#if is_instance_valid(occupier) and occupier.faction == Unit.Faction.PLAYER:
@@ -675,13 +680,12 @@ func _is_defeat_incurred() -> bool:
 	if remaining_players.is_empty():
 		return true
 
-	# Opcional: verificar si el protagonista sigue con vida
 	var leader_alive: bool = false
 	for player in remaining_players:
 		if "is_leader" in player and player.is_leader:
 			leader_alive = true
 			break
-		# Si no definiste variable is_leader aún, se asume vivo mientras haya aliados
+			
 		leader_alive = true 
 
 	return not leader_alive
