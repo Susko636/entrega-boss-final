@@ -45,7 +45,9 @@ alignment = 1
 
 [node name="TitleLabel" type="Label" parent="BannerContainer/VBoxContainer" unique_id=359593552]
 layout_mode = 2
+theme_override_font_sizes/font_size = 32
 
 [node name="DescriptionLabel" type="Label" parent="BannerContainer/VBoxContainer" unique_id=2121070079]
 layout_mode = 2
+theme_override_font_sizes/font_size = 32
 autowrap_mode = 2
