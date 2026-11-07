@@ -47,12 +47,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 func _try_move(direction: Vector2i) -> void:
-	var target_cell: Vector2i = cell + direction
+	move_to_cell(cell + direction)
 
+func update_visual_position() -> void:
+	position = Grid.grid_to_world(cell)
+	
+func move_to_cell(target_cell: Vector2i) -> void:
+	
 	if Grid.is_within_bounds(target_cell, bounds):
 		cell = target_cell
 		update_visual_position()
 		cell_changed.emit(cell)
-
-func update_visual_position() -> void:
-	position = Grid.grid_to_world(cell)

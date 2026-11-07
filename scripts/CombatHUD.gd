@@ -1,4 +1,4 @@
-class_name CombatHUD
+class_name CombatHD
 extends PanelContainer
 
 @onready var attacker_name: Label = $HBoxContainer/AttackerInfo/AttackerName

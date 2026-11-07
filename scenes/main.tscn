@@ -2,12 +2,13 @@
 
 [ext_resource type="Script" uid="uid://clj4c6fxcosds" path="res://scripts/Main.gd" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://dra02f2elx1gc" path="res://levels/level_00.tscn" id="2_jyhfs"]
-[ext_resource type="PackedScene" uid="uid://daxeryox41xcv" path="res://scenes/combat_hud.tscn" id="2_sugp2"]
 [ext_resource type="PackedScene" uid="uid://bawlvq1t2aude" path="res://scenes/action_menu.tscn" id="3_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://bys5x01423uem" path="res://levels/level_01.tscn" id="3_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://8r2bvnmfbema" path="res://scenes/ui/speech_bubble.tscn" id="3_tefeu"]
 [ext_resource type="PackedScene" uid="uid://dbh3qyl6qygkw" path="res://scenes/battle_map.tscn" id="4_tipki"]
+[ext_resource type="PackedScene" uid="uid://dbtxt5vyhx260" path="res://scenes/ui/phase_banner.tscn" id="5_choun"]
 [ext_resource type="PackedScene" uid="uid://b7p4xmawpr1jk" path="res://scenes/ui/unit_info_card.tscn" id="5_tbgi4"]
+[ext_resource type="Script" uid="uid://dpo6bw7dhf42x" path="res://scripts/CombatPreview.gd" id="8_85g3d"]
 
 [node name="Main" type="Node2D" unique_id=1396697347]
 script = ExtResource("1_jyhfs")
@@ -19,16 +20,37 @@ level_scenes = Array[PackedScene]([ExtResource("2_jyhfs"), ExtResource("3_o6xl0"
 
 [node name="UI_Layer" type="CanvasLayer" parent="." unique_id=656514183]
 
-[node name="SpeechBubble" parent="UI_Layer" unique_id=856556417 instance=ExtResource("3_tefeu")]
+[node name="PhaseBanner" parent="UI_Layer" unique_id=414047391 instance=ExtResource("5_choun")]
+
+[node name="UnitInfoCard" parent="UI_Layer" unique_id=622452856 instance=ExtResource("5_tbgi4")]
 visible = false
 
-[node name="CombatHUD" parent="UI_Layer" unique_id=1921047878 instance=ExtResource("2_sugp2")]
+[node name="SpeechBubble" parent="UI_Layer" unique_id=856556417 instance=ExtResource("3_tefeu")]
 visible = false
 
 [node name="ActionMenu" parent="UI_Layer" unique_id=1871907602 instance=ExtResource("3_jyhfs")]
 visible = false
 
-[node name="UnitInfoCard" parent="UI_Layer" unique_id=622452856 instance=ExtResource("5_tbgi4")]
-visible = false
+[node name="CombatHUD" type="Control" parent="UI_Layer" unique_id=1925299881]
+propagate_maximum_size = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1153.0
+offset_bottom = 650.0
+script = ExtResource("8_85g3d")
+
+[node name="AttackerCard" parent="UI_Layer/CombatHUD" unique_id=2057605795 instance=ExtResource("5_tbgi4")]
+layout_mode = 1
+pivot_offset = Vector2(15, 15)
+
+[node name="DefenderCard" parent="UI_Layer/CombatHUD" unique_id=679404918 instance=ExtResource("5_tbgi4")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -379.0
+offset_right = -379.0
+grow_horizontal = 0
+pivot_offset = Vector2(-15, 15)
 
 [node name="ScreenTransition" type="CanvasLayer" parent="." unique_id=645680718]

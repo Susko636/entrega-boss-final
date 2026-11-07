@@ -24,6 +24,7 @@ map_size = Vector2i(100, 100)
 victory_condition = SubResource("Resource_xw3ee")
 
 [node name="LancerTrigger" type="Node2D" parent="Triggers" parent_id_path=PackedInt32Array(560653938) index="0" unique_id=20580628]
+position = Vector2(128, 0)
 script = ExtResource("3_y72ps")
 dialogue_text = "Debemos acabar con todos esos Goblings para irnos de aquí"
 trigger_cells = Array[Vector2i]([Vector2i(4, 8)])
@@ -44,11 +45,11 @@ tile_map_data = PackedByteArray("AAAmABUAAQAGAAIAAAAmABQAAQAGAAEAAAAmABMAAQAGAAE
 z_index = 6
 
 [node name="LeaderSpawn" parent="PlayerSpawn" index="0" unique_id=303796359]
-position = Vector2(384, 576)
+position = Vector2(320, 576)
 
 [node name="Prota" parent="PlayerSpawn/LeaderSpawn" index="0" unique_id=176907120 instance=ExtResource("2_kjd3d")]
 character_name = "Prota"
-max_hp = 15
+max_hp = 1
 strength = 2
 defense = 3
 move_range = 8
@@ -184,7 +185,7 @@ position = Vector2(1344, 384)
 z_index = 6
 
 [node name="GoblinTorch" parent="Enemys" index="0" unique_id=2115232808 instance=ExtResource("8_j0sdw")]
-position = Vector2(960, 256)
+position = Vector2(512, 640)
 character_name = "Gobling"
 faction = 1
 strength = 4

@@ -43,6 +43,7 @@ func _ready() -> void:
 	cursor.accept_pressed.connect(_on_cursor_accept)
 	cursor.cancel_pressed.connect(_on_cursor_cancel)
 	_setup_camera_limits()
+	_update_camera_to_cell(cursor.cell, true)
 	register_units()
 	
 	turn_manager.phase_changed.connect(_on_turn_phase_changed)
@@ -103,14 +104,24 @@ func register_units() -> void:
 
 func _on_cursor_cell_changed(new_cell: Vector2i) -> void:
 	
-	if camera:
-		camera.position = Grid.grid_to_world(new_cell) + Vector2(32, 32)
+	_update_camera_to_cell(new_cell)
 
 	var hovered_unit: Unit = get_unit_at_cell(new_cell)
 	cursor_hovered_unit.emit(hovered_unit)
 
 	if current_state:
 		current_state.on_cursor_cell_changed(new_cell)
+
+func _update_camera_to_cell(target_cell: Vector2i, instant: bool = false) -> void:
+
+	var target_pos: Vector2 = Grid.grid_to_world(target_cell) + Vector2(32, 32)
+	
+	if instant:
+		camera.position = target_pos
+		return
+		
+	var tween: Tween = create_tween()
+	tween.tween_property(camera, "position", target_pos, 0.12).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 func _on_cursor_accept(selected_cell: Vector2i) -> void:
 	
@@ -160,7 +171,7 @@ func cancel_move() -> void:
 	selected_unit.grid_coord = unit_original_cell
 	selected_unit.snap_to_grid()
 
-	cursor.position = Grid.grid_to_world(unit_original_cell)
+	cursor.move_to_cell(unit_original_cell)
 	change_map_state(&"move")
 	
 func _finish_unit_turn() -> void:
@@ -176,7 +187,7 @@ func _finish_unit_turn() -> void:
 	overlay_layer.clear()
 
 	if turn_manager.is_player_phase():
-		cursor.position = Grid.grid_to_world(unit_destination_cell)
+		cursor.move_to_cell(unit_destination_cell)
 		cursor.is_active = true
 		change_map_state(&"idle")
 		
@@ -200,7 +211,6 @@ func _end_game(won: bool) -> void:
 func _try_attack_target(target_cell: Vector2i) -> void:
 	
 	if not (target_cell in attackable_cells and units_by_cell.has(target_cell)):
-		print("Casilla no válida para atacar.")
 		return
 
 	combat_forecast_cleared.emit()
@@ -208,19 +218,16 @@ func _try_attack_target(target_cell: Vector2i) -> void:
 	overlay_layer.clear()
 
 	var target_unit: Unit = units_by_cell[target_cell]
-	print("Iniciando combate: ", selected_unit.character_name, " vs ", target_unit.character_name)
 
 	var result: CombatResolver.CombatResult = await CombatResolver.execute_combat(selected_unit, target_unit)
 
 	if result.defender_died:
-		print(target_unit.character_name, " ha caído.")
-		_destroy_unit(target_unit)
+		await _destroy_unit(target_unit)
 		_finish_unit_turn()
 		return
 
 	if result.attacker_died:
-		print(selected_unit.character_name, " ha caído en el contraataque.")
-		_destroy_unit(selected_unit)
+		await _destroy_unit(selected_unit)
 		selected_unit = null
 		reachable_cells.clear()
 		attackable_cells.clear()
@@ -374,12 +381,12 @@ func _process_enemy_turn(enemy: Unit) -> void:
 	if not is_instance_valid(enemy):
 		return
 
-	cursor.position = Grid.grid_to_world(enemy.grid_coord)
+	cursor.move_to_cell(enemy.grid_coord)
 	await get_tree().create_timer(0.3).timeout
 
 	var reachable: Dictionary = get_reachable_cells_for_faction(enemy.grid_coord, enemy.move_range, Unit.Faction.ENEMY)
-
 	var player_units: Array[Unit] = get_units_of_faction(Unit.Faction.PLAYER)
+	
 	if player_units.is_empty():
 		enemy.has_acted = true
 		return
@@ -411,9 +418,9 @@ func _process_enemy_turn(enemy: Unit) -> void:
 		var result: CombatResolver.CombatResult = await CombatResolver.execute_combat(enemy, chosen_target)
 		
 		if result.defender_died:
-			_destroy_unit(chosen_target)
+			await _destroy_unit(chosen_target)
 		elif result.attacker_died:
-			_destroy_unit(enemy)
+			await _destroy_unit(enemy)
 
 		if is_instance_valid(enemy):
 			enemy.has_acted = true
@@ -599,7 +606,10 @@ func start_player_phase() -> void:
 
 	check_mission_status()
 	reset_faction_actions(Unit.Faction.PLAYER)
-
+	
+	var leader: Unit = get_leader()
+	cursor.move_to_cell(leader.grid_coord)
+	
 	cursor.is_active = true
 	change_map_state(&"idle")
 
@@ -612,7 +622,8 @@ func _destroy_unit(unit: Unit) -> void:
 		if units_by_cell[coord] == unit:
 			units_by_cell.erase(coord)
 			break
-			
+	
+	await unit.play_death_effect()
 	unit.queue_free()
 	
 	await get_tree().process_frame
@@ -634,7 +645,6 @@ func _init_map_states() -> void:
 func change_map_state(state_name: StringName) -> void:
 	
 	if not states.has(state_name):
-		#push_warning("El estado de mapa '%s' no existe." % state_name)
 		return
 	if current_state:
 		current_state.exit()
@@ -655,25 +665,6 @@ func check_mission_status() -> void:
 		change_map_state(&"game_over")
 		match_won.emit()
 		return
-
-#func _is_victory_achieved() -> bool:
-
-	#match objective_type:
-		#ObjectiveType.ROUT_ENEMIES:
-			#var enemies: Array[Unit] = get_units_of_faction(Unit.Faction.ENEMY)
-			#return enemies.is_empty()
-#
-		#ObjectiveType.REACH_ESCAPE_POINT:
-			#if units_by_cell.has(target_escape_cell):
-				#var occupier: Unit = units_by_cell[target_escape_cell]
-				#if is_instance_valid(occupier) and occupier.faction == Unit.Faction.PLAYER:
-					#return true
-			#return false
-#
-		#ObjectiveType.SURVIVE_TURNS:
-			#return 100 > turns_to_survive
-#
-	#return false
 
 func _is_defeat_incurred() -> bool:
 	
@@ -745,3 +736,14 @@ func _register_interactables() -> void:
 		if node is MapInteractionTrigger and node.is_active:
 			for cell in node.trigger_cells:
 				triggers_by_cell[cell] = node
+
+
+func get_leader() -> Unit:
+	
+	var player_units: Array[Unit] = get_units_of_faction(Unit.Faction.PLAYER)
+	
+	for unit in player_units:
+		if unit.is_leader:
+			return unit
+			
+	return player_units[0]

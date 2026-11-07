@@ -35,14 +35,15 @@ sources/0 = SubResource("TileSetAtlasSource_5utsm")
 y_sort_enabled = true
 script = ExtResource("1_67bvd")
 
+[node name="Camera2D" type="Camera2D" parent="." unique_id=256280610]
+zoom = Vector2(0.8, 0.8)
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+
 [node name="Triggers" type="Node2D" parent="." unique_id=560653938]
 
 [node name="TurnManager" type="Node2D" parent="." unique_id=1491298437]
 script = ExtResource("2_hpw63")
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=256280610]
-position_smoothing_enabled = true
-position_smoothing_speed = 6.0
 
 [node name="BackGround" type="Parallax2D" parent="." unique_id=262050121]
 repeat_size = Vector2(64, 64)

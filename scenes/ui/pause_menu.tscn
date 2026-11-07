@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://de3p6y00poetq"]
+
+[ext_resource type="Texture2D" uid="uid://dy4q4fw687nqr" path="res://Assets/Tiny Swords/UI Elements/UI Banners from the store page/Ribbons/Menu.png" id="1_6tw0m"]
+
+[node name="PauseMenu" type="Control" unique_id=1669688350]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="NinePatchRect" parent="." unique_id=1594106078]
+layout_mode = 0
+offset_right = 331.0
+offset_bottom = 335.0
+texture = ExtResource("1_6tw0m")
+region_rect = Rect2(0, -2.2018967, 361, 341.54523)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1495988804]
+layout_mode = 0
+offset_right = 96.0
+offset_bottom = 130.0
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer" unique_id=2093665506]
+layout_mode = 2

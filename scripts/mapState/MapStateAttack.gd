@@ -9,7 +9,7 @@ func enter() -> void:
 
 	if not map.attackable_cells.is_empty():
 		var first_target: Vector2i = map.attackable_cells[0]
-		map.cursor.position = Grid.grid_to_world(first_target)
+		map.cursor.move_to_cell(first_target)
 		if map.units_by_cell.has(first_target):
 			map.combat_forecast_requested.emit(map.selected_unit, map.units_by_cell[first_target])
 

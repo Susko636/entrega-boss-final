@@ -69,6 +69,7 @@ func follow_path(path: Array[Vector2i]) -> void:
 	movement_finished.emit()
 
 func play_attack_animation(target_world_pos: Vector2) -> void:
+	
 	if sprite:
 		sprite.flip_h = target_world_pos.x < global_position.x
 
@@ -84,7 +85,7 @@ func play_attack_animation(target_world_pos: Vector2) -> void:
 		tween.tween_property(self, "global_position", original_pos, 0.10).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 		await tween.finished
 
-	state_machine.transition_to(&"idle")
+	state_machine.transition_to(&"idlestate")
 	attack_finished.emit()
 
 func take_damage(amount: int) -> bool:
@@ -92,12 +93,7 @@ func take_damage(amount: int) -> bool:
 	current_hp = maxi(0, current_hp - amount)
 	damage_taken.emit(current_hp)
 
-	var target_visual: CanvasItem = sprite if sprite else self
-	var tween: Tween = create_tween()
-	tween.tween_property(target_visual, "modulate", Color(2.5, 2.5, 2.5), 0.08)
-	
-	tween.tween_property(target_visual, "modulate", Color.WHITE, 0.08)
-
+	await play_hit_effect()
 	var is_dead: bool = current_hp <= 0
 	
 	if is_dead:
@@ -107,3 +103,32 @@ func take_damage(amount: int) -> bool:
 	
 static func calculate_damage(attacker: Unit, defender: Unit) -> int:
 	return maxi(1, attacker.strength - defender.defense)
+
+func play_hit_effect() -> void:
+	
+	var target_visual: CanvasItem = sprite if sprite else self
+	var original_pos: Vector2 = target_visual.position
+	
+	var tween: Tween = create_tween().set_parallel(false)
+	
+	target_visual.modulate = Color(2.5, 0.4, 0.4) # tono rojizo brillante
+	
+	var shake_tween: Tween = create_tween().set_parallel(false)
+	shake_tween.tween_property(target_visual, "position", original_pos + Vector2(-4, 0), 0.04)
+	shake_tween.tween_property(target_visual, "position", original_pos + Vector2(4, 0), 0.04)
+	shake_tween.tween_property(target_visual, "position", original_pos, 0.04)
+	
+	tween.tween_property(target_visual, "modulate", Color.WHITE, 0.12)
+	
+	await shake_tween.finished
+
+func play_death_effect() -> void:
+
+	var target_visual: CanvasItem = sprite if sprite else self
+	var tween: Tween = create_tween().set_parallel(true)
+	
+	tween.tween_property(target_visual, "modulate", Color(1.0, 0.2, 0.2, 0.0), 0.45).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_property(target_visual, "position:y", target_visual.position.y + 8.0, 0.45).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tween.tween_property(target_visual, "scale", Vector2(0.8, 1.2), 0.2)
+	
+	await tween.finished

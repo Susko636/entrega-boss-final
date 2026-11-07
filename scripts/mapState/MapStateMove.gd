@@ -34,6 +34,11 @@ func _commit_move(target_cell: Vector2i) -> void:
 		if not path.is_empty():
 			map.units_by_cell.erase(origin_cell)
 			map.units_by_cell[target_cell] = unit
+			
 			await unit.follow_path(path)
+			
+			map.cursor.move_to_cell(target_cell)
+	else:
+		map.cursor.move_to_cell(target_cell)
 
 	map.change_map_state(&"menu")

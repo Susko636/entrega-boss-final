@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://dbtxt5vyhx260"]
+
+[ext_resource type="Script" uid="uid://dmdga4upugss3" path="res://scripts/PhaseBanner.gd" id="1_4ufsn"]
+[ext_resource type="Texture2D" uid="uid://ca1ikqnj1u8kr" path="res://Assets/Tiny Swords/UI Elements/UI Elements/Ribbons/SmallRibbonsBlue.png" id="2_4qfvt"]
+
+[node name="PhaseBanner" type="Control" unique_id=414047391]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_4ufsn")
+
+[node name="BannerContainer" type="Control" parent="." unique_id=262916306]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 300.0
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BannerTexture" type="TextureRect" parent="BannerContainer" unique_id=1752521921]
+layout_mode = 0
+offset_left = -442.0
+offset_top = -92.0
+offset_right = 502.0
+offset_bottom = 135.0
+texture = ExtResource("2_4qfvt")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BannerContainer" unique_id=1052843739]
+layout_mode = 0
+offset_left = -141.0
+offset_top = -64.0
+offset_right = 202.0
+offset_bottom = 77.0
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="BannerContainer/VBoxContainer" unique_id=359593552]
+layout_mode = 2
+
+[node name="DescriptionLabel" type="Label" parent="BannerContainer/VBoxContainer" unique_id=2121070079]
+layout_mode = 2
+autowrap_mode = 2

@@ -29,7 +29,7 @@ static func _apply_strike(striker: Unit, target: Unit) -> bool:
 	await striker.play_attack_animation(target.global_position)
 	
 	var damage: int = Unit.calculate_damage(striker, target)
-	var is_dead: bool = target.take_damage(damage)
+	var is_dead: bool = await target.take_damage(damage)
 	
 	await striker.get_tree().create_timer(0.25).timeout
 	return is_dead
